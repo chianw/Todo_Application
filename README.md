@@ -2,7 +2,9 @@
 
 # To-do App
 
-> This is a SPA react-app project. A To-do app that let's user to schedule, add, delete and mark completed their day task. 
+> This repository containe the code of a React application called Todo-app. I've created this to Deploy it on an Azure Kubernetes cluster using the GitOps approach for continous deployment.✨
+
+> This is a SPA react-app project. A To-do app that let's user to schedule, add, delete and mark completed daily tasks. 
 
 
 ## Built With
