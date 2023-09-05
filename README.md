@@ -15,10 +15,6 @@
 - Webpack
 - Jest
 
-## Live Demo 
-[Heroku](https://iridescent-chaja-fcde0c.netlify.app/)
-
-
 ## Getting Started
 
 To get a local copy up and running follow these simple example steps.
@@ -42,16 +38,6 @@ To use this project or app run npm start in the project directory and you will s
 ### Run tests
 
 For running tests inside the project directory run npm test in command line or Terminal.
-
-### Deployment
-
-I have used [HEROKU](https://kinocryptoapp.herokuapp.com/) for deploying this project.
-
-## Authors
-
-- GitHub: [@Stanleeeeee](https://github.com/Stanleeeeee).
-- Twitter: [@Stanmega89](https://twitter.com/Stanmega89)
-- LinkedIn: [stanley-ezeoke](https://www.linkedin.com/in/stanley-ezeoke/)
 
 ## 🤝 Contributing
 
