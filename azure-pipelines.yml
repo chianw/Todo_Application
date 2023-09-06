@@ -9,6 +9,8 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+name: v$(Rev:r)
+
 jobs:
 - job: LintAndTest
   displayName: 'Lint and Test React Code'
@@ -25,12 +27,14 @@ jobs:
   dependsOn: LintAndTest
   steps:
   - script: |
-      buildtag="v$(Build.BuildId)"
+      buildtag="v$(Build.BuildNumber)"
+      echo $buildtag
+      
       # Log in to Docker Hub
       echo $(DOCKERHUB_PASSWORD) | docker login -u $(DOCKERHUB_USERNAME) --password-stdin
       
       # Build Docker image
-      docker build -t todo-app:$buildtag .
+      docker build -t $(DOCKERHUB_USERNAME)/todo-app:$buildtag .
       
       # Push Docker image to Docker Hub
       docker push $(DOCKERHUB_USERNAME)/todo-app:$buildtag
