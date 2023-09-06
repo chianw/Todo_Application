@@ -1,0 +1,38 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+jobs:
+- job: LintAndTest
+  displayName: 'Lint and Test React Code'
+  steps:
+  - script: |
+      # Add your linting and testing commands here
+      npm install -g eslint
+      eslint src
+      # Add more commands for testing as needed
+    displayName: 'Lint and Test React Code'
+
+- job: BuildDockerImage
+  displayName: 'Build and Push Docker Image'
+  dependsOn: LintAndTest
+  steps:
+  - script: |
+      buildtag="v$(Build.BuildId)"
+      # Log in to Docker Hub
+      echo $(DOCKERHUB_PASSWORD) | docker login -u $(DOCKERHUB_USERNAME) --password-stdin
+      
+      # Build Docker image
+      docker build -t todo-app:$buildtag .
+      
+      # Push Docker image to Docker Hub
+      docker push $(DOCKERHUB_USERNAME)/todo-app:$buildtag
+    displayName: 'Build and Push Docker Image'
+
