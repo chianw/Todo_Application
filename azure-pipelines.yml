@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - main
 
@@ -27,7 +22,7 @@ jobs:
   dependsOn: LintAndTest
   steps:
   - script: |
-      buildtag="v$(Build.BuildNumber)"
+      buildtag="$(Build.BuildNumber)"
       echo $buildtag
       
       # Log in to Docker Hub
@@ -39,4 +34,26 @@ jobs:
       # Push Docker image to Docker Hub
       docker push $(DOCKERHUB_USERNAME)/todo-app:$buildtag
     displayName: 'Build and Push Docker Image'
+
+- job: UpdateKubeManifest
+  displayName: 'Update Kubernetes Manifest'
+  dependsOn: BuildDockerImage
+  steps:
+  - script: |
+      # Clone the Kubernetes manifest repository
+      git clone https://$(GITHUB_PAT)@github.com/Joelayo/Week_4-Kubernetes-Manifests.git
+      
+      # Update the image tag in the Kubernetes manifest files
+      buildtag="$(Build.BuildNumber)"
+      cd Week_4-Kubernetes-Manifests
+      sed -i "s/todo-app:.*/todo-app:$buildtag/g" kube-manifest/deployment.yaml
+
+      # Commit and push changes using GitHub PAT
+      git config user.email "$(GITHUB_EMAIL)"
+      git config user.name "Joelayo"
+      git add .
+      git commit -m "Update image tag to $buildtag"
+      git push origin main
+    displayName: 'Update Kubernetes Manifest'
+
 
