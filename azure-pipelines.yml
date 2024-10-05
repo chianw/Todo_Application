@@ -36,10 +36,10 @@ jobs:
       echo $(DOCKERHUB_PASSWORD) | docker login -u $(DOCKERHUB_USERNAME) --password-stdin
       
       # Build Docker image
-      docker build -t $(DOCKERHUB_USERNAME)/todo-app:$buildtag .
+      sudo docker build -t $(DOCKERHUB_USERNAME)/todo-app:$buildtag .
       
       # Push Docker image to Docker Hub
-      docker push $(DOCKERHUB_USERNAME)/todo-app:$buildtag
+      sudo docker push $(DOCKERHUB_USERNAME)/todo-app:$buildtag
     displayName: 'Build and Push Docker Image'
 
 - job: UpdateKubeManifest
